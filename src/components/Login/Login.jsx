@@ -9,7 +9,10 @@ import {Bounce, ToastContainer, toast } from 'react-toastify';
 import { FaEyeSlash ,FaEye  } from "react-icons/fa";
 
 import { GoogleAuthProvider } from "firebase/auth";
+import { useDispatch } from 'react-redux';
+import { userinfo } from '../../slice/userSlice';
 const Login = () => {
+  const dispatch = useDispatch()
 
 const navigate = useNavigate()
 
@@ -68,6 +71,10 @@ const auth = getAuth();
           // Signed in
            console.log(user);
            toast.success("Login succcess")
+           dispatch(userinfo(user.user))
+           localStorage.setItem ("userinfo" , JSON.stringify(user))
+          console.log(userinfo);
+
                  setTimeout(() => {
 
                    navigate("/home")

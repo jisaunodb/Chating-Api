@@ -3,13 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    value: 0,
+    value: localStorage.getItem("userinfo") ? JSON.parse(localStorage.getItem("userinfo")): null
   },
   reducers: {
     userinfo: (state, action ) => {
       // state.value += 1
-      console.log(state);
-      console.log(action);
+      console.log(state.value);
+      console.log(action.payload);
+      state.value = action.payload
 
     },
     // decrement: (state) => {

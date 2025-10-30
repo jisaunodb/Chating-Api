@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router/dom";
 import firebaseConfig from './components/Firabase/firebaseConfig';
 import ForgotPassword from './components/ForgotPass/ForgotPassword';
 import Home from './components/Home/Home';
+import Sideber from './components/Sideber/Sideber';
 
 function App() {
 const router = createBrowserRouter([
@@ -25,12 +26,16 @@ const router = createBrowserRouter([
   {
     path:"/home",
     element : <Home/>
+  },
+  {
+    path:"/sideber",
+    element : <Sideber/>
   }
 ]);
 
   return (
     <>
-     <RouterProvider router={router} />,
+     <RouterProvider router={router} />
     </>
   )
 }
