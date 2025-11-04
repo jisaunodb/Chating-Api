@@ -6,7 +6,11 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "
 import { CgPassword } from 'react-icons/cg';
 import {Bounce, ToastContainer, toast } from 'react-toastify';
 import { LineWave } from 'react-loader-spinner'
+import { getDatabase, ref, set } from "firebase/database";
+
 const Registration = () => {
+  const db = getDatabase();
+
   const auth = getAuth();
   const navigate = useNavigate ()
   const [loading, setloading] = useState(false)
@@ -76,6 +80,11 @@ let isValid = true;
 
         navigate("/login")
       }, 2000);
+      set(ref(db, 'users/' + user.user.uid), {
+    username: fullname,
+    email: email,
+    password : password,
+  });
       setloading(false)
       setEmail("")
       setfullname("")

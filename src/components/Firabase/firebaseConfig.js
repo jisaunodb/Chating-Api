@@ -9,6 +9,7 @@ import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
   apiKey: "AIzaSyDY8GcLeQS-HuLDZxDFYQStMN5ny7LTLLA",
   authDomain: "chatting-api-b0e03.firebaseapp.com",
+  databaseURL: "https://chatting-api-b0e03-default-rtdb.firebaseio.com",
   projectId: "chatting-api-b0e03",
   storageBucket: "chatting-api-b0e03.firebasestorage.app",
   messagingSenderId: "603014599813",

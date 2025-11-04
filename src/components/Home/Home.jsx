@@ -3,12 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router';
 import Sideber from '../Sideber/Sideber';
+import Grouplist from '../Grouplist/Grouplist';
+import Freinds from '../Freinds/Freinds';
+import UserList from '../UserList/UserList';
 
 const Home = () => {
   const auth = getAuth()
   const data = useSelector(state =>(state.userinfo.value))
   const navaigate = useNavigate();
-  // console.log(data);
+  console.log(data);
   const [loading, setloading] = useState (true);
   const [varify,setverify] = useState(false);
   // useEffect (() =>{
@@ -36,11 +39,14 @@ if(loading) {
     return null
   }
   return (
-    <div>
+    <div className='w-[1440px] mx-auto '>
 {
 varify?
-<div>
+<div className='flex justify-between gap-[22px] my-[20px]'>
   <Sideber/>
+  <Grouplist/>
+  <Freinds/>
+  <UserList/>
 </div>
 :
 <div className='bg-primary w-full h-screen text-white flex justify-center items-center'>
