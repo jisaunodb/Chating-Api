@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import img from '../../assets/registation-pic.png'
 import { Link, useNavigate } from 'react-router'
 import { FaEyeSlash ,FaEye  } from "react-icons/fa";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { CgPassword } from 'react-icons/cg';
 import {Bounce, ToastContainer, toast } from 'react-toastify';
 import { LineWave } from 'react-loader-spinner'
@@ -75,12 +75,21 @@ let isValid = true;
     .then((user) => {
       sendEmailVerification(auth.currentUser)
       console.log(user);
+      updateProfile(auth.currentUser, {
+      displayName: fullname,
+      }).then(() => {
+      console.log("jisuf");
+
+      }).catch((error) => {
+      console.log(error);
+
+      });
       toast.success("registration succcess! please verify your email.")
       setTimeout(() => {
 
         navigate("/login")
       }, 2000);
-      set(ref(db, 'users/' + user.user.uid), {
+      set(ref(db, 'users/' + user?.user?.uid), {
     username: fullname,
     email: email,
     password : password,

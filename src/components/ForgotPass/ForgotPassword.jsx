@@ -2,7 +2,7 @@
 import { logEvent } from "firebase/analytics";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import React, {  useState } from 'react'
-import { Link, } from 'react-router';
+import { Link } from 'react-router';
 const ForgotPassword = () => {
 
 
