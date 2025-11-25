@@ -11,7 +11,9 @@ import { getAuth, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from 'react-redux';
 import { userinfo } from '../../slice/userSlice';
 const Sideber = () => {
-const data = useSelector((selctor) => (selctor.userinfo.value.user))
+const data = useSelector((selctor) => (selctor?.userinfo?.value))
+console.log(data, "sidebar");
+
   const auth = getAuth();
 
   // const navigate = useNavigate()
@@ -38,7 +40,7 @@ const data = useSelector((selctor) => (selctor.userinfo.value.user))
       <div className='text-center mx-auto pb-[20px]'>
         <img src={img} alt="" className='mx-auto pt-[38px]' />
       </div>
-      <p className="font-bold uppercase">{data ?.displayName}</p>
+      <p className="font-bold uppercase">{data ?.displayName || data?.user?.displayName}</p>
       <div className='mt-[78px] bg-[#fff] w-[161px] h-[88px] ml-[25px] rounded-l-2xl relative'>
           <div className='py-[20px] '>
               <FiHome className=' w-[43px] h-[46px] ml-[45px] mr-[70px] text-black'/>

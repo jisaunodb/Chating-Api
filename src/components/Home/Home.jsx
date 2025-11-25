@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router';
 import Sideber from '../Sideber/Sideber';
-import Grouplist from '../Grouplist/Grouplist';
 import Freinds from '../Freinds/Freinds';
 import UserList from '../UserList/UserList';
-
+import Grouplist from '../Grouplist-2/Grouplist';
+import Friendrequest from '../FreindRequest/FreindRequest'
+import MyGroup from '../MyGroup/MyGroup'
+import BlockUser from '../BlockUser/BlockUser';
 const Home = () => {
   const auth = getAuth()
   const data = useSelector(state =>(state.userinfo.value))
@@ -27,7 +29,7 @@ const Home = () => {
   })
 
   onAuthStateChanged(auth, (user) => {
-  if (user.emailVerified) {
+  if (user?.emailVerified) {
     setverify(true)
 
   }
@@ -44,9 +46,19 @@ if(loading) {
 varify?
 <div className='flex justify-between gap-[22px] my-[20px]'>
   <Sideber/>
+  <div>
   <Grouplist/>
+  <Friendrequest/>
+  </div>
+  <div>
+
   <Freinds/>
+  <MyGroup/>
+  </div>
+  <div>
   <UserList/>
+  <BlockUser/>
+  </div>
 </div>
 :
 <div className='bg-primary w-full h-screen text-white flex justify-center items-center'>

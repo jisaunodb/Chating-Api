@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import joinUser from "../../assets/join-user.png"
 import { FaSquarePlus } from "react-icons/fa6";
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { FaMinus } from "react-icons/fa6";
+
+import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
 import { getAuth } from 'firebase/auth';
 import { useSelector } from 'react-redux';
 const UserList = () => {
-    const data = useSelector ((selctor) => (selctor.userinfo.value.user))
-    // console.log(data.uid);
+    const data = useSelector ((selctor) => (selctor?.userinfo?.value?.user))
+    console.log(data?.uid);
 
     const [userlist, setuserlist] = useState([])
     const db = getDatabase()
@@ -25,7 +27,7 @@ const UserList = () => {
             //  if (item.val().email != currentUser.email) {
             // arr.push(item.val())
             if (data?.uid != item.key) {
-            arr.push(item.val())
+            arr.push({...item.val(), userid: item.key})
              }
 
         });
@@ -39,22 +41,104 @@ const UserList = () => {
    const requesthendle =(item) =>{
     console.log("hello world", item);
 
-    set(ref (db,'friendrequest/'), {
+    set(push(ref(db,'friendrequest/')), {
         senderName: data.displayName,
-        receverName: item.username
+        senderId : data.uid,
+        receverName: item.username,
+        receverId: item.userid
     });
 
 
    }
 
+const [friendrequestlist, setfreindrequestlist] = useState ([]);
+useEffect(() => {
+  const usersref = ref(db, 'friendrequest');
+  onValue(usersref, (snapshot) => {
+    const arr = [];
+    snapshot.forEach((item) => {
+        arr.push(item.val().receverId + item.val().senderId)
+
+    });
+    setfreindrequestlist(arr)
+
+  });
+}, []);
+console.log(friendrequestlist);
+
 //    const (logins)
     console.log(userlist);
+
+
+    const [freindlist, setfreindlist] = useState([])
+
+        useEffect(() => {
+          const freindref = ref(db, 'freind');
+          onValue(freindref, (snapshot) => {
+            const arr = [];
+            snapshot.forEach((item) => {
+                arr.push(item.val().receverId + item.val().senderId)
+
+
+            });
+            setfreindlist(arr)
+
+          });
+        }, []);
+
+
+
+
+
+        const [blocklist, setblocklist] = useState([])
+
+            useEffect(() => {
+              const freindref = ref(db, 'block');
+              onValue(freindref, (snapshot) => {
+                const arr = [];
+                snapshot.forEach((item) => {
+                    if(data.uid == item.val().receverId || data.uid== item.val().senderId){
+                            arr.push({...item.val(), userId : item.key})
+                        }
+
+
+                });
+                setblocklist(arr)
+
+              });
+            }, []);
+
+
+             const [blockListee, setBlockListee] = useState([]);
+    useEffect(() => {
+        const blockRef = ref(db, "block");
+        onValue(blockRef, (snapshot) => {
+            let arr = [];
+            snapshot.forEach((item) => {
+                arr.push(item.val().receverId + item.val().senderId);
+            })
+            setBlockListee(arr)
+        })
+    }, [])
+
+
+const unblockhendle = (item) =>{
+ console.log(item);
+
+      remove(ref(db, "block/" + item.userId));
+
+
+}
+
+
+
+
 
   return (
     <div className='font-primary '>
         <div className='w-[] h-[449px] rounded-2xl shadow overflow-y-scroll '>
             <div className='flex justify-between items-center pt-[13px] px-[20px]'>
-                <h3 className='text-[20px] font-semibold font-primary text-black'>Friends</h3>
+                <h3 className='text-[20px] font-semibold font-primary text-black'>User List</h3>
                 <BsThreeDotsVertical />
             </div>
             {
@@ -67,7 +151,31 @@ const UserList = () => {
                     <h5 className='text-[18px] font-semibold font-primary '>{user.username}</h5>
                     <p>{user.email}</p>
                 </div>
-                <FaSquarePlus onClick={()=>requesthendle(user)} className='w-[30px] h-[30px] ml-[20px]'/>
+
+                    {
+                    blockListee.includes(data?.uid + user.userid) ||
+                    blockListee.includes(user.userid + data?.uid) ? (
+                    <p className='text-red-600 font-semibold font-primary'>BLOCKED</p>
+                    )
+                        :
+
+                    freindlist.includes(data.uid + user.userid) ||
+                    freindlist.includes(user.userid + data.uid) ?
+
+                    (
+                    <p>freind</p>
+                ) :
+                    friendrequestlist.includes(data.uid + user.userid) ||
+                    friendrequestlist.includes(user.userid + data.uid) ?
+
+                    (
+                    <FaMinus onClick={()=>requesthendle()} className='w-[30px] h-[30px] ml-[20px]'/>
+                )
+                    :
+                    (
+                    <FaSquarePlus onClick={()=>requesthendle(user)} className='w-[30px] h-[30px] ml-[20px]'/>
+                )
+                    }
                     </div>
             </div>
                 ))
@@ -76,46 +184,7 @@ const UserList = () => {
 
 
         </div>
-        <div className='w-[344px] h-[] rounded-2xl shadow mt-[43px]'>
-            <div className='flex justify-between items-center pt-[13px] px-[20px]'>
-                <h3 className='text-[20px] font-semibold font-primary text-black'>My Groups</h3>
-                <BsThreeDotsVertical />
-            </div>
-            <div className='flex justify-around items-center ml-[20px] mr-[28px] mt-[17px] border-b pb-[14px] border-[#BFBFBF]'>
-                <img src={joinUser} alt="" />
-                <div className='ml-[14px] pr-[28px]'>
-                    <h5 className='text-[18px] font-semibold font-primary '>Raghav</h5>
-                    <p>Dinner?!</p>
-                </div>
-                <button className='mr-[33px] font-primary font-semibold text-[20px] px-[22px] bg-black text-white rounded-[5px]'>unblock</button>
-            </div>
-            <div className='flex justify-around items-center ml-[20px] mr-[28px] mt-[17px] border-b pb-[14px] border-[#BFBFBF]'>
-                <img src={joinUser} alt="" />
-                <div className='ml-[14px] pr-[28px]'>
-                    <h5 className='text-[18px] font-semibold font-primary '>Raghav</h5>
-                    <p>Dinner?!</p>
-                </div>
-                <button className='mr-[33px] font-primary font-semibold text-[20px] px-[22px] bg-black text-white rounded-[5px]'>unblock</button>
-            </div>
-            <div className='flex justify-around items-center ml-[20px] mr-[28px] mt-[17px] border-b pb-[14px] border-[#BFBFBF]'>
-                <img src={joinUser} alt="" />
-                <div className='ml-[14px] pr-[28px]'>
-                    <h5 className='text-[18px] font-semibold font-primary '>Raghav</h5>
-                    <p>Dinner?!</p>
-                </div>
-                <button className='mr-[33px] font-primary font-semibold text-[20px] px-[22px] bg-black text-white rounded-[5px]'>unblock</button>
-            </div>
-            <div className='flex justify-around items-center ml-[20px] mr-[28px] mt-[17px] pb-[14px] '>
-                <img src={joinUser} alt="" />
-                <div className='ml-[14px] pr-[28px]'>
-                    <h5 className='text-[18px] font-semibold font-primary '>Raghav</h5>
-                    <p>Dinner?!</p>
-                </div>
-                <button className='mr-[33px] font-primary font-semibold text-[20px] px-[22px] bg-black text-white rounded-[5px]'>unblock</button>
-            </div>
 
-
-        </div>
     </div>
   )
 }
