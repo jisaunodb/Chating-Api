@@ -10,6 +10,9 @@ const Grouplist = () => {
     console.log(data?.uid);
     const [groupName , setgroupName] = useState("")
     const [grouptagline , setgrouptagline] = useState("")
+
+    const [groupNameError, setGroupNameError] = useState("")
+    const [groupTaglineError, setGroupTaglineError] = useState("")
     const [grouplist, setgrouplist] = useState ([])
     const db = getDatabase();
     const [show, setshow] = useState(false)
@@ -21,13 +24,12 @@ const Grouplist = () => {
     const hendlecreategroup =() => {
         console.log(groupName);
         console.log(grouptagline);
-        if(!groupName){
-            console.log("please your groupname");
-
+         if (!groupName) {
+            setGroupNameError("Group Name Please")
         }
-        if(!grouptagline){
-            console.log("please your grouptagline");
 
+        if (!grouptagline) {
+            setGroupTaglineError("Tagline please")
         }
         if(groupName && grouptagline)
             set(push(ref(db, "grouplist/")),{
@@ -74,17 +76,22 @@ console.log(grouplist);
             </div>
                     {
                         show?
-                         <div className='block mt-[20px] mx-[16px] text-[20px] font-medium'>
-                            <input onChange={(e) => setgroupName(e.target.value)} className='w-full border py-2 px-2 outline-0' type="text" placeholder='Group Name' />
-                            <input onChange={(e) => setgrouptagline(e.target.value)} className='mt-[10px] w-full border py-2 px-2 outline-0' type="text" placeholder='Group Tagline' />
+                         <div className='pt-10 absolute left-[40%] top-[15%] bg-lime-400 h-[300px] w-[500px] rounded-3xl'>
+                            <div className='p-3'>
 
+                            <input onChange={(e) => {setgroupName(e.target.value), setGroupNameError("")}} className='w-full border py-2 px-2 outline-0' type="text" placeholder='Group Name' />
+                            <p className='bg-red-600 px-2 rounded text-black text-[14px] mt-2'>{groupNameError}</p>
+                            <input onChange={(e) => {setgrouptagline(e.target.value),setGroupTaglineError("")}} className='mt-[10px] w-full border py-2 px-2 outline-0' type="text" placeholder='Group Tagline' />
 
+                        <p className='bg-red-600 px-2 rounded text-black text-[14px] mt-2'>{groupTaglineError}</p>
                             <button
                             onClick={hendlecreategroup}
                             className='text-center mt-[10px] bg-primary py-[5px] px-[30px] text-white rounded-[5px] w-full'>Create</button>
+                            </div>
 
 
                          </div>
+
                           :
                           <div>
                             {

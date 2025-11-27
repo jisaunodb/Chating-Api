@@ -34,7 +34,10 @@ import { useSelector } from 'react-redux';
 
       const unblockhendle = (item) =>{
       console.log(item);
+      if(data.uid === item.receverId){
+
           remove(ref(db, "block/" + item.userId));
+      }
 
 
       }
@@ -59,9 +62,12 @@ import { useSelector } from 'react-redux';
                     </h5>
                     <p>Dinner?!</p>
                 </div>
+                {data.uid === item.receverId &&(
+
                 <button
                 onClick={()=> unblockhendle (item)}
                  className='mr-[33px] font-primary font-semibold text-[20px] px-[22px] bg-black text-white rounded-[5px]'>unblock</button>
+                )}
             </div>
                 ))
             }
