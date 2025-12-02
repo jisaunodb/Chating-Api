@@ -10,6 +10,8 @@ const Freinds = () => {
     const db = getDatabase()
     const [freindlist, setfreindlist] = useState([])
 
+  // data niye ase "ba" read kore useEffect
+
     useEffect(() => {
       const freindref = ref(db, 'freind');
       onValue(freindref, (snapshot) => {
@@ -27,6 +29,8 @@ const Freinds = () => {
       });
     }, []);
 console.log(freindlist);
+
+// eta abar read kore data niye asha hoiche
 const [blockuser, setblockuser] = useState([])
 
 useEffect(() => {
@@ -46,7 +50,7 @@ useEffect(() => {
 }, []);
 console.log(blockuser);
 
-
+// block er kaj write kore data pathai dite
 
 const blockhendle = (item) =>{
 console.log(item);
@@ -82,7 +86,7 @@ set(push(ref(db, "block")),{
                     </h5>
                     <p>Dinner?!</p>
                 </div>
-                {
+                {/* {
               blockuser.includes(data.uid + item.userid) ||
                                   blockuser.includes(item.userid + data.uid) ?
 
@@ -98,7 +102,12 @@ set(push(ref(db, "block")),{
                                 onClick={()=>blockhendle(item)}
                                 className='mr-[33px] font-primary font-semibold text-[20px] px-[22px] bg-black text-white rounded-[5px]'>block</button>
                               )
-            }
+            } */}
+
+                          <button
+                          onClick={()=>blockhendle(item)}
+                          className='mr-[33px] font-primary font-semibold text-[20px] px-[22px] bg-black text-white rounded-[5px]'>block</button>
+
             </div>
                 ))
             }

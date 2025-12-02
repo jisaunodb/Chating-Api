@@ -8,6 +8,7 @@ import firebaseConfig from './components/Firabase/firebaseConfig';
 import ForgotPassword from './components/ForgotPass/ForgotPassword';
 import Home from './components/Home/Home';
 import Sideber from './components/Sideber/Sideber';
+import Massage from './components/Massage/Massage';
 
 function App() {
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path:"/sideber",
     element : <Sideber/>
+  },
+  {
+    path:"/msg",
+    element : <Massage/>
   }
 ]);
 

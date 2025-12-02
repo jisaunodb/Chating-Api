@@ -45,7 +45,7 @@ if(loading) {
 {
 varify?
 <div className='flex justify-between gap-[22px] my-[20px]'>
-  <Sideber/>
+  <Sideber active ="home"/>
   <div>
   <Grouplist/>
   <Friendrequest/>

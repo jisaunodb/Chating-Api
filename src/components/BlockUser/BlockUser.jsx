@@ -34,7 +34,7 @@ import { useSelector } from 'react-redux';
 
       const unblockhendle = (item) =>{
       console.log(item);
-      if(data.uid === item.receverId){
+      if(data.uid === item.receverId || data.uid === item.senderId){
 
           remove(ref(db, "block/" + item.userId));
       }
@@ -62,7 +62,7 @@ import { useSelector } from 'react-redux';
                     </h5>
                     <p>Dinner?!</p>
                 </div>
-                {data.uid === item.receverId &&(
+                {data.uid === item.senderId || data.uid === item.receverId  &&(
 
                 <button
                 onClick={()=> unblockhendle (item)}
