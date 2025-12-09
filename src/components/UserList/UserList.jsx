@@ -130,7 +130,29 @@ const unblockhendle = (item) =>{
 
 }
 
+const [searchfilterlist, setsearchfilterlist] = useState ([]);
 
+const hendlesearch = (e) =>{
+    let arr = [];
+    // console.log(e.target.value);
+    // console.log(userlist);
+    if(e.target.value.length == 0 ){
+        setsearchfilterlist([])
+    }else{
+
+        userlist.filter((item) =>{
+            if(item.username.toLowerCase().includes(e.target.value.toLowerCase())){
+                arr.push(item)
+                setsearchfilterlist(arr)
+            }
+            // console.log(item.username.toLowerCase());
+
+        })
+    }
+
+
+}
+console.log(searchfilterlist);
 
 
 
@@ -141,7 +163,49 @@ const unblockhendle = (item) =>{
                 <h3 className='text-[20px] font-semibold font-primary text-black'>User List</h3>
                 <BsThreeDotsVertical />
             </div>
+            <div className='mt-[20px]'>
+                <input type="text" onChange={hendlesearch} className=' rounded-[10px] border-2 px-[20px] text-[16px] font-semibold outline-none mx-[20px] h-[45px] w-[350px]' />
+            </div>
             {
+                searchfilterlist.length > 0 ?
+
+                searchfilterlist.map((user)=>(
+
+            <div className='flex justify-around items-center ml-[20px] mr-[28px] mt-[17px] border-b pb-[14px] border-[#BFBFBF]'>
+                <img src={joinUser} alt="" />
+                <div className="flex justify-between items-center">
+                <div className='ml-[14px] '>
+                    <h5 className='text-[18px] font-semibold font-primary '>{user.username}</h5>
+                    <p>{user.email}</p>
+                </div>
+
+                    {
+                    blockListee.includes(data?.uid + user.userid) ||
+                    blockListee.includes(user.userid + data?.uid) ? (
+                    <p className='text-red-600 font-semibold font-primary'>BLOCKED</p>
+                    )
+                        :
+
+                    freindlist.includes(data.uid + user.userid) ||
+                    freindlist.includes(user.userid + data.uid) ?
+
+                    (
+                    <p>freind</p>
+                ) :
+                    friendrequestlist.includes(data.uid + user.userid) ||
+                    friendrequestlist.includes(user.userid + data.uid) ?
+
+                    (
+                    <FaMinus onClick={()=>requesthendle()} className='w-[30px] h-[30px] ml-[20px]'/>
+                )
+                    :
+                    (
+                    <FaSquarePlus onClick={()=>requesthendle(user)} className='w-[30px] h-[30px] ml-[20px]'/>
+                )
+                    }
+                    </div>
+            </div>
+                )) :
                 userlist.map((user)=>(
 
             <div className='flex justify-around items-center ml-[20px] mr-[28px] mt-[17px] border-b pb-[14px] border-[#BFBFBF]'>
