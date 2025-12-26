@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const Grouplist = () => {
 
     const data = useSelector ((selctor) => (selctor?.userinfo?.value?.user))
-    console.log(data?.uid);
+    // console.log(data?.uid);
     const [groupName , setgroupName] = useState("")
     const [grouptagline , setgrouptagline] = useState("")
 
@@ -45,7 +45,7 @@ const Grouplist = () => {
           onValue(grouplistref, (snapshot) => {
             const arr = [];
             snapshot.forEach((item) => {
-                if(item.val().groupcreator != data.uid){
+                if(item.val().groupcreator != data?.uid){
                     arr.push(item.val());
 
                 }

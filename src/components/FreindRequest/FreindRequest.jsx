@@ -6,7 +6,7 @@ import { getDatabase, ref, onValue, set, remove, push} from "firebase/database";
 import { getAuth } from 'firebase/auth';
 const Friendrequest = () => {
 const data = useSelector ((selctor) => (selctor?.userinfo?.value?.user))
-console.log(data?.uid);
+console.log(data);
 
 const [friendrequestlist, setfriendrequestlist] = useState([])
 const db = getDatabase()
@@ -70,7 +70,7 @@ const romoveaccept = (item) =>{
                     <div className='flex justify-around items-center ml-[20px] mr-[27px] mt-[17px] border-b pb-[14px] border-[#BFBFBF]'>
                         <img src={joinUser} alt="" />
                         <div className='ml-[14px] pr-[54px]'>
-                            <h5 className='text-[18px] font-semibold font-primary '>{item.senderName}</h5>
+                            <h5 className='text-[18px] font-semibold font-primary '>{item?.senderName}</h5>
                             {/* <p>{item.email}</p> */}
                         </div>
                         <button

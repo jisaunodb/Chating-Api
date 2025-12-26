@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
       const BlockUser = () => {
         const data = useSelector ((selctor) => (selctor?.userinfo?.value?.user))
-          console.log(data?.uid);
+          console.log(data);
         const db = getDatabase()
       const [blocklist, setblocklist] = useState([])
 

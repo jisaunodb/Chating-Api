@@ -5,7 +5,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { ImExit } from "react-icons/im";
 
 import img from "../../assets/Ellipse-profile.png"
-import { Link, useNavigate } from 'react-router';
+import { Link, Navigate, useNavigate } from 'react-router';
 import { getAuth, signOut } from "firebase/auth";
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,7 +26,7 @@ console.log(data, "sidebar");
     signOut(auth).then(() => {
       setTimeout(() => {
         localStorage.clear('userinfo');
-        // navigate("/login")
+        Navigate("/login")
 
       }, 2000);
 

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const Freinds = () => {
 
     const data = useSelector ((selctor) => (selctor?.userinfo?.value?.user))
-    console.log(data?.uid);
+    console.log(data);
     const db = getDatabase()
     const [freindlist, setfreindlist] = useState([])
 
@@ -23,7 +23,7 @@ const Freinds = () => {
             }
 
 
-        });
+        },[]);
         setfreindlist(arr)
 
       });
@@ -39,7 +39,7 @@ useEffect(() => {
     const arr = [];
     snapshot.forEach((item) => {
         // arr.push(item.val().receverId + item.val().senderId)
-        if(data.uid == item.val().receverId || data.uid== item.val().senderId){
+        if(data?.uid == item.val().receverId || data?.uid== item.val().senderId){
             arr.push({...item.val(), userId : item.key})
         }
 

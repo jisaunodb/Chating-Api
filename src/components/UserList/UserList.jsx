@@ -9,7 +9,7 @@ import { getAuth } from 'firebase/auth';
 import { useSelector } from 'react-redux';
 const UserList = () => {
     const data = useSelector ((selctor) => (selctor?.userinfo?.value?.user))
-    console.log(data?.uid);
+    console.log(data);
 
     const [userlist, setuserlist] = useState([])
     const db = getDatabase()
