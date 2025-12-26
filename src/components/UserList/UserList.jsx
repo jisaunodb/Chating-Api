@@ -18,6 +18,7 @@ const UserList = () => {
 // const [logins,setlogins] = useState("")
 
    useEffect(()=>{
+    if (!data?.uid) return;
      const userref = ref(db, "users" )
     onValue(userref, (snapshot)=>{
         let arr =[]
@@ -26,8 +27,8 @@ const UserList = () => {
             // console.log(item.val());
             //  if (item.val().email != currentUser.email) {
             // arr.push(item.val())
-            if (data?.uid != item.key) {
-            arr.push({...item.val(), userid: item.key})
+            if (data?.uid !== item?.key) {
+            arr.push({...item?.val(), userid: item?.key})
              }
 
         });
@@ -35,17 +36,17 @@ const UserList = () => {
 
 
     })
-   },[])
+   },[data?.uid])
 
 
    const requesthendle =(item) =>{
     console.log("hello world", item);
 
     set(push(ref(db,'friendrequest/')), {
-        senderName: data.displayName,
-        senderId : data.uid,
-        receverName: item.username,
-        receverId: item.userid
+        senderName: data?.displayName,
+        senderId : data?.uid,
+        receverName: item?.username,
+        receverId: item?.userid
     });
 
 
@@ -63,7 +64,7 @@ useEffect(() => {
     setfreindrequestlist(arr)
 
   });
-}, []);
+}, [data?.uid]);
 console.log(friendrequestlist);
 
 //    const (logins)
@@ -84,7 +85,7 @@ console.log(friendrequestlist);
             setfreindlist(arr)
 
           });
-        }, []);
+        }, [data?.uid]);
 
 
 
@@ -97,7 +98,7 @@ console.log(friendrequestlist);
               onValue(freindref, (snapshot) => {
                 const arr = [];
                 snapshot.forEach((item) => {
-                    if(data.uid == item.val().receverId || data.uid== item.val().senderId){
+                    if(data?.uid == item.val().receverId || data?.uid== item.val().senderId){
                             arr.push({...item.val(), userId : item.key})
                         }
 
@@ -106,7 +107,7 @@ console.log(friendrequestlist);
                 setblocklist(arr)
 
               });
-            }, []);
+            }, [data?.uid]);
 
 
              const [blockListee, setBlockListee] = useState([]);
@@ -119,7 +120,7 @@ console.log(friendrequestlist);
             })
             setBlockListee(arr)
         })
-    }, [])
+    }, [data?.uid])
 
 
 const unblockhendle = (item) =>{
@@ -186,14 +187,14 @@ console.log(searchfilterlist);
                     )
                         :
 
-                    freindlist.includes(data.uid + user.userid) ||
-                    freindlist.includes(user.userid + data.uid) ?
+                    freindlist.includes(data?.uid + user.userid) ||
+                    freindlist.includes(user.userid + data?.uid) ?
 
                     (
                     <p>freind</p>
                 ) :
-                    friendrequestlist.includes(data.uid + user.userid) ||
-                    friendrequestlist.includes(user.userid + data.uid) ?
+                    friendrequestlist.includes(data?.uid + user.userid) ||
+                    friendrequestlist.includes(user.userid + data?.uid) ?
 
                     (
                     <FaMinus onClick={()=>requesthendle()} className='w-[30px] h-[30px] ml-[20px]'/>
@@ -223,14 +224,14 @@ console.log(searchfilterlist);
                     )
                         :
 
-                    freindlist.includes(data.uid + user.userid) ||
-                    freindlist.includes(user.userid + data.uid) ?
+                    freindlist.includes(data?.uid + user.userid) ||
+                    freindlist.includes(user.userid + data?.uid) ?
 
                     (
                     <p>freind</p>
                 ) :
-                    friendrequestlist.includes(data.uid + user.userid) ||
-                    friendrequestlist.includes(user.userid + data.uid) ?
+                    friendrequestlist.includes(data?.uid + user.userid) ||
+                    friendrequestlist.includes(user.userid + data?.uid) ?
 
                     (
                     <FaMinus onClick={()=>requesthendle()} className='w-[30px] h-[30px] ml-[20px]'/>

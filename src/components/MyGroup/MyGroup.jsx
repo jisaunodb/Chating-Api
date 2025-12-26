@@ -15,7 +15,7 @@ const MyGroup = () => {
               onValue(grouplistref, (snapshot) => {
                 const arr = [];
                 snapshot.forEach((item) => {
-                    if(item.val().groupcreator == data.uid){
+                    if(item.val().groupcreator == data?.uid){
                         arr.push(item.val());
 
                     }
@@ -39,8 +39,8 @@ const MyGroup = () => {
                     <div className='flex justify-around items-center ml-[20px] mr-[28px] mt-[17px] border-b pb-[14px] border-[#BFBFBF]'>
                         <img src={joinUser} alt="" />
                         <div className='ml-[14px] pr-[54px]'>
-                            <h5 className='text-[18px] font-semibold font-primary '>{item.groupName}</h5>
-                            <p>{item.grouptagline}</p>
+                            <h5 className='text-[18px] font-semibold font-primary '>{item?.groupName}</h5>
+                            <p>{item?.grouptagline}</p>
                         </div>
                         <p className='text-[10px] font-medium text-[#7F7F7F] font-primary'>Today, 8:56pm</p>
                     </div>

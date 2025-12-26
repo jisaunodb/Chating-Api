@@ -17,7 +17,7 @@ const Freinds = () => {
       onValue(freindref, (snapshot) => {
         const arr = [];
         snapshot.forEach((item) => {
-            if(data.uid == item.val().receverId || data.uid == item.val().senderId){
+            if(data?.uid == item.val().receverId || data?.uid == item.val().senderId){
 
                 arr.push({...item.val(), userId : item.key})
             }
@@ -81,7 +81,7 @@ set(push(ref(db, "block")),{
                     <h5 className='text-[18px] font-semibold font-primary '>
                         {/* {item.senderName} */}
                         {
-                            data.uid == item.receverId ? item.senderName : item.receverName
+                            data?.uid == item.receverId ? item.senderName : item.receverName
                         }
                     </h5>
                     <p>Dinner?!</p>

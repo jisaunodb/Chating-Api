@@ -9,6 +9,7 @@ import ForgotPassword from './components/ForgotPass/ForgotPassword';
 import Home from './components/Home/Home';
 import Sideber from './components/Sideber/Sideber';
 import Massage from './components/Massage/Massage';
+import Settings from './components/Settings/Settings';
 
 function App() {
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path:"/msg",
     element : <Massage/>
+  },
+  {
+    path:"/stg",
+    element : <Settings/>
   }
 ]);
 

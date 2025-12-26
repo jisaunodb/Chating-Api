@@ -71,7 +71,7 @@ const auth = getAuth();
           // Signed in
            console.log(user);
            toast.success("Login succcess")
-           dispatch(userinfo(user.user))
+           dispatch(userinfo(user?.user))
            localStorage.setItem ("userinfo" , JSON.stringify(user))
           console.log(userinfo);
 

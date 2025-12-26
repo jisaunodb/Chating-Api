@@ -13,12 +13,20 @@ export const userSlice = createSlice({
       state.value = action.payload
 
     },
+    // dispach system
+    userNameUpdate : (state, action) =>{
+      if(state.value && state.value.user){
+        state.value.user.displayName = action.payload
+      }
+      const updateprofilename ={...state.value}
+      localStorage.setItem("userinfo", JSON.stringify(updateprofilename) )
+    }
     // decrement: (state) => {
     //   state.value -= 1
     // }
   },
 })
 
-export const { userinfo } = userSlice.actions
+export const { userinfo,userNameUpdate } = userSlice.actions
 
 export default userSlice.reducer

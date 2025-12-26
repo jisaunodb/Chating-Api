@@ -7,16 +7,19 @@ import { GrEmoji } from "react-icons/gr";
 import { IoCameraOutline } from "react-icons/io5";
 import { useSelector } from 'react-redux';
 import { getDatabase, onValue, push, ref, set } from 'firebase/database';
+import moment from "moment"
+import EmojiPicker from 'emoji-picker-react';
 
 const Chatbox = () => {
     const db = getDatabase()
-    const activedata = useSelector((state)=>state )
-  console.log(activedata.activeinfo.value);
+    const activedata = useSelector((state)=>(state.activeinfo?.value))
+//   console.log(activedata.activeinfo.value);
     // console.log(activedata?.activeinfo?.value?.name);
 
     const data = useSelector ((selctor) => (selctor?.userinfo?.value?.user))
     // console.log(data?.uid);
     // console.log(data);
+    const [showemoji, setshowemoji] = useState(false)
 
 
     const [msg, setmsgsent] = useState("")
@@ -26,11 +29,15 @@ const Chatbox = () => {
         set(push(ref(db,'msg/')), {
             senderId: data.uid,
             senderName: data.displayName,
-            receverid: activedata?.activeinfo?.value?.id,
-            recevername: activedata?.activeinfo?.value?.name,
-            massage: msg
+            receverid: activedata?.id,
+            recevername: activedata?.name,
+            massage: msg,
+            date: moment().format()
             });
+            setmsgsent("")
+
     }
+
 
     useEffect(()=>{
              const msgref = ref(db, 'msg');
@@ -38,7 +45,7 @@ const Chatbox = () => {
                 const arr = [];
                 snapshot.forEach((item) => {
                     if(
-                        (data.uid == item.val().senderId && activedata.id == item.val().receverId ) ||
+                        (data.uid == item.val().senderId && activedata.id == item.val().receverid ) ||
                          (data.uid == item.val().receverid && activedata.id == item.val().senderId )
                     )
                     arr.push(item.val());
@@ -48,15 +55,18 @@ const Chatbox = () => {
                 });
                 setmsglist(arr);
               });
-        },[])
+        },[activedata.id])
         console.log(msglist);
 
 
 
-    // const sendmsg = () =>{
-    //     console.log("item");
+    const sendmsg = () =>{
+        console.log("item");
 
-    // }
+    }
+     const handleEmoji = (emoji) => {
+        setmsgsent(msg+emoji.emoji)
+    }
 
   return (
     <div className='w-[689px] h-full shadow-lg px-[53px] mb-[34px] '>
@@ -67,8 +77,9 @@ const Chatbox = () => {
                     <h3 className='text-[24px] font-primary font-semibold '>
 
                     {
-                        activedata.activeinfo.value?
-                        <p >{activedata.activeinfo.value.name} </p>
+                        activedata?
+
+                        <p >{activedata.name} </p>
                         :
                         <p>Unknown</p>
                     }</h3>
@@ -79,7 +90,7 @@ const Chatbox = () => {
         </div>
             {
                 msglist.map((item)=>(
-                    console.log(item.senderId),
+                    // console.log(item.receverid),
 
 
                     data.uid == item.senderId ?
@@ -92,7 +103,7 @@ const Chatbox = () => {
                     <h5>{item.massage}</h5>
                 <TbTriangleFilled className='absolute text-[#000000] right-[-12px] h-[14px] w-[25px] ' />
                 </div>
-                <p className='text-[]'>Today, 2:01pm</p>
+                <p className='text-[]'>{moment(item.date).fromNow()}</p>
             </div>)
             :
            ( <div className='mt-[54px]'>
@@ -101,17 +112,25 @@ const Chatbox = () => {
                     <h5>{item?.massage}</h5>
                 <TbTriangleFilled className='absolute text-[#F1F1F1] left-[-12px] h-[14px] w-[25px] ' />
                 </div>
-                <p className='text-[]'>Today, 2:01pm</p>
+                <p className='text-[]'>{moment(item.date).fromNow()}</p>
             </div>)
                 ))
             }
 
         <div className='pt-[35px] border-t-1 '>
+            {
+                        showemoji &&
+                    <EmojiPicker onEmojiClick={(emoji) => handleEmoji (emoji)}/>
+                    }
             <div className='relative flex items-center justify-between gap-[20px]'>
-                    <input
-                    onChange={(e)=>setmsgsent(e.target.value)}
-                    type="text" className='  outline-none w-full h-[45px] pl-[20px] pr-[70px] bg-[#F1F1F1] rounded-[10px]'/>
-            <GrEmoji className='w-[20px] h-[20px] absolute right-[18%] z-10'/>
+                    {/* <input
+                    onChange={(e)=>setmsgsent(e.target.value)} value={msg}
+                    type="text" className='  outline-none w-full h-[45px] pl-[20px] pr-[70px] bg-[#F1F1F1] rounded-[10px]'/> */}
+                     <input onChange={(e) => setmsgsent(e.target.value)} value={msg} type="text" placeholder='Message' onKeyDown={(e) => e.key == "Enter" && hendlesmg()} className=' outline-none w-[543px] pr-[200px] pl-[10px] bg-[#F1F1F1] py-[13px] rounded-[10px]' />
+
+            <GrEmoji
+            onClick={(e)=> setshowemoji(!showemoji)}
+            className='cursor-pointer w-[20px] h-[20px] absolute right-[18%] z-10'/>
             <IoCameraOutline className='w-[20px] h-[20px] absolute right-[13%] z-10'/>
 
                     <div

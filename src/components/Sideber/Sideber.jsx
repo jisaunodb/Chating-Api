@@ -51,11 +51,13 @@ console.log(data, "sidebar");
       </div>
       <div className={`relative after:absolute after:content-[""] after:top-0 after:left-0 after:w-[167px] after:h-full ${active == "massage" ? "after:bg-white" : "after:bg-transparent"}  after:z-[-1] z-1 after:ml-[20px] after:rounded-lg before:absolute before:content-[""] before:top-0 before:right-0 before:h-full before:w-[10px] before:bg-[#1E1E1E] before:rounded-tl-lg before:rounded-bl-lg before:shadow-2xl/90 before:shadow-[-2px_0px_4px_0px_rgba(0,0,0,0.25)] py-[10px] mt-[20px] `}>
         <Link to="/msg">
-        <LuMessageCircleMore className='w-[43px] h-[46px] mx-auto text-[#C3C3C3]'/>
+        <LuMessageCircleMore className='w-[43px] h-[46px] mx-auto text-black'/>
         </Link>
       </div>
-      <div className='text-center mx-auto mt-[69px]'>
+      <div className={`text-center mx-auto mt-[69px] relative after:absolute after:content-[""] after:top-0 after:left-0 after:w-[167px] after:h-full ${active == "setting" ? "after:bg-white" : "after:bg-transparent"}  after:z-[-1] z-1 after:ml-[20px] after:rounded-lg before:absolute before:content-[""] before:top-0 before:right-0 before:h-full before:w-[10px] before:bg-[#1E1E1E] before:rounded-tl-lg before:rounded-bl-lg before:shadow-2xl/90 before:shadow-[-2px_0px_4px_0px_rgba(0,0,0,0.25)] py-[10px] mt-[20px]`}>
+        <Link to="/stg">
         <IoSettingsOutline className='w-[43px] h-[46px] mx-auto text-[#C3C3C3]'/>
+        </Link>
       </div>
       <div className='text-center mx-auto mt-[334px] pb-[47px]'>
         <ImExit onClick={exit} className=' cursor-pointer w-[43px] h-[46px] mx-auto text-[#C3C3C3]'/>
