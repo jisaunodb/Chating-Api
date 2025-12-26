@@ -9,7 +9,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuth } from 'firebase/auth/cordova';
 import { updateProfile } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, update } from 'firebase/database';
 import { userNameUpdate } from '../../slice/userSlice';
 
 const SettingsInfo = () => {
@@ -29,7 +29,7 @@ const heldlenewname = () =>{
   updateProfile(auth.currentUser, {
   displayName: {showDisplayName}
 })
-  set(ref(db, 'users/' + data?.uid), {
+  update(ref(db, 'users/' + data?.uid), {
     username: showDisplayName,
 
   })

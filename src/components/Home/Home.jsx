@@ -11,7 +11,7 @@ import MyGroup from '../MyGroup/MyGroup'
 import BlockUser from '../BlockUser/BlockUser';
 const Home = () => {
   const auth = getAuth()
-  const data = useSelector(state =>(state.userinfo.value))
+  const data = useSelector(state =>(state?.userinfo?.value?.user))
   const navaigate = useNavigate();
   console.log(data);
   const [loading, setloading] = useState (true);
